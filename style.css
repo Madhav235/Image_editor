@@ -13,6 +13,9 @@ html,body{
 .main{
     width: 100vw;
     height: 100vh;
+    display: flex;
+    /* gap: var(--gutter-md); */
+    justify-content: space-between;
 }
 
 .main .left{
@@ -68,7 +71,7 @@ html,body{
 
 .main .left .bottom{
     width: 90%;
-    height: 88%;
+    height: 80%;
     background-color: var(--bg-secondary-color);
     border-radius: var(--border-radius-2xl);
     border: solid 2px white;
@@ -89,4 +92,22 @@ html,body{
 .main .left .bottom .placeholder i{
     font-size: 10rem;
     opacity: 0.7;
+}
+
+.main .right {
+    /* background-color: red; */
+    height: 100%;
+    width: 40.5%;
+    display: flex;
+    justify-content: end;
+    padding-right: var(--padding-2xl);
+    padding-top: var(--padding-2xl);
+}
+
+.main .right .filterContainer{
+    width: 100%;
+    height: 95%;
+    background-color: var(--bg-secondary-color);
+    border: solid 2px white;
+    border-radius: var(--border-radius-2xl);
 }
