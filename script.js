@@ -52,12 +52,12 @@ function createElement(name,value,min,max,unit="%"){
     const div= document.createElement("div");
     div.classList.add("filter");
     const h1= document.createElement("h1");
-
     const input= document.createElement("input");
     input.type= "range";
     input.min= min;
     input.max= max;
     input.id= name;
+    input.value= value;
 
     const p= document.createElement("p");
     p.innerText= name;
@@ -67,3 +67,10 @@ function createElement(name,value,min,max,unit="%"){
 
     return div
 }
+
+const filterContainer= document.querySelector(".filterContainer");
+
+Object.keys(filters).forEach(val=>{
+    let a= createElement(val,filters[val].value,filters[val].min,filters[val].max,filters[val].unit);
+    filterContainer.appendChild(a);
+});

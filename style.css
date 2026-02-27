@@ -132,18 +132,3 @@ html,body{
     appearance: none;
 }
 
-.main .right .filterContainer input::-webkit-slider-runnable-track{
-    height: 3px;
-    background-color: var(--bg-active-color);
-    border-radius: 3px;
-}
-
-.main .right .filterContainer input::-webkit-slider-thumb{
-    cursor: pointer;
-    appearance: none;
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
-    background-color: red;
-    margin-top: -8.5px;
-}
