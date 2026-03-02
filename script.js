@@ -61,3 +61,16 @@ function createElement(name,value,min,max,unit="%"){
 
     const p= document.createElement("p");
     p.innerText= name;
+
+    div.appendChild(p);
+    div.appendChild(input);
+
+    return div
+}
+
+const filterContainer= document.querySelector(".filterContainer");
+
+Object.keys(filters).forEach(val=>{
+    let a= createElement(val,filters[val].value,filters[val].min,filters[val].max,filters[val].unit);
+    filterContainer.appendChild(a);
+});
