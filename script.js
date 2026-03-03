@@ -1,3 +1,6 @@
+const imageInput = document.querySelector("#imageInput");
+let imageCanvas= document.querySelector("#image-canvas");
+const canvasCtx = imageCanvas.getContext("2d")
 const filters = {
     brightness: {
         value: 100,
@@ -74,3 +77,19 @@ Object.keys(filters).forEach(val=>{
     let a= createElement(val,filters[val].value,filters[val].min,filters[val].max,filters[val].unit);
     filterContainer.appendChild(a);
 });
+
+imageInput.addEventListener("change",(e)=>{
+    // const placeholder = document.querySelector(".placeholder");
+    // placeholder.style.appearance = "none";
+    const file = e.target.files[0]
+
+    const img = new Image();
+    img.src = URL.createObjectURL(file)
+
+
+    img.onload = ()=>{
+        imageCanvas.width = img.width;
+        imageCanvas.height = img.height;
+        canvasCtx.drawImage(img,0,0);
+    }
+})

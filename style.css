@@ -147,3 +147,8 @@ html,body{
     background-color: red;
     margin-top: -8.5px;
 }
+
+canvas{
+    max-width: 90%;
+    min-height: 90%;
+}
