@@ -4,7 +4,7 @@ const canvasCtx = imageCanvas.getContext("2d");
 let image = null;
 let file = null;
 
-const filters = {
+let filters = {
     brightness: {
         value: 100,
         min: 0,
@@ -76,11 +76,14 @@ function createElement(name, value, min, max, unit = "%") {
 }
 
 const filterContainer = document.querySelector(".filterContainer");
-
-Object.keys(filters).forEach(val => {
+function createFilters(){
+    Object.keys(filters).forEach(val => {
     let a = createElement(val, filters[val].value, filters[val].min, filters[val].max, filters[val].unit);
     filterContainer.appendChild(a);
 });
+}
+
+createFilters();
 
 imageInput.addEventListener("change", (e) => {
     const placeholder = document.querySelector(".placeholder");
@@ -130,3 +133,53 @@ function applyFilters() {
     canvasCtx.drawImage(image, 0, 0,imageCanvas.width,imageCanvas.height);
 }
 
+const reset = document.querySelector("#reset");
+reset.addEventListener("click",(e)=>{
+    filters = {
+    brightness: {
+        value: 100,
+        min: 0,
+        max: 200,
+        unit: "%"
+    },
+    contrast: {
+        value: 100,
+        min: 0,
+        max: 200,
+        unit: "%"
+    }, hue_rotate: {
+        value: 0,
+        min: 0,
+        max: 200,
+        unit: "deg"
+    }, blur_scale: {
+        value: 0,
+        min: 0,
+        max: 10,
+        unit: "px"
+    }, grayScale: {
+        value: 0,
+        min: 0,
+        max: 200,
+        unit: "%"
+    }, sepia: {
+        value: 0,
+        min: 0,
+        max: 200,
+        unit: "%"
+    }, opacity: {
+        value: 100,
+        min: 0,
+        max: 100,
+        unit: "%"
+    }, invert: {
+        value: 0,
+        min: 0,
+        max: 200,
+        unit: "%"
+    }
+}
+applyFilters()
+filterContainer.innerHTML="<h1>Filters</h1>"
+createFilters()
+})
