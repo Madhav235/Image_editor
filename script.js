@@ -1,6 +1,9 @@
 const imageInput = document.querySelector("#imageInput");
-let imageCanvas= document.querySelector("#image-canvas");
-const canvasCtx = imageCanvas.getContext("2d")
+let imageCanvas = document.querySelector("#image-canvas");
+const canvasCtx = imageCanvas.getContext("2d");
+let image = null;
+let file = null;
+
 const filters = {
     brightness: {
         value: 100,
@@ -51,46 +54,76 @@ const filters = {
     }
 }
 
-function createElement(name,value,min,max,unit="%"){
-    const div= document.createElement("div");
+function createElement(name, value, min, max, unit = "%") {
+    const div = document.createElement("div");
     div.classList.add("filter");
-    const h1= document.createElement("h1");
-    const input= document.createElement("input");
-    input.type= "range";
-    input.min= min;
-    input.max= max;
-    input.id= name;
-    input.value= value;
+    const h1 = document.createElement("h1");
+    const input = document.createElement("input");
+    input.type = "range";
+    input.min = min;
+    input.max = max;
+    input.id = name;
+    input.value = value;
 
-    const p= document.createElement("p");
-    p.innerText= name;
+    const p = document.createElement("p");
+    p.innerText = name;
 
     div.appendChild(p);
     div.appendChild(input);
 
+    input.addEventListener("input", (e) => {
+        filters[name].value = input.value;
+        console.log(unit)
+        applyFilters(input.value, unit)
+    });
+
     return div
 }
 
-const filterContainer= document.querySelector(".filterContainer");
+const filterContainer = document.querySelector(".filterContainer");
 
-Object.keys(filters).forEach(val=>{
-    let a= createElement(val,filters[val].value,filters[val].min,filters[val].max,filters[val].unit);
+Object.keys(filters).forEach(val => {
+    let a = createElement(val, filters[val].value, filters[val].min, filters[val].max, filters[val].unit);
     filterContainer.appendChild(a);
 });
 
-imageInput.addEventListener("change",(e)=>{
+imageInput.addEventListener("change", (e) => {
     const placeholder = document.querySelector(".placeholder");
     placeholder.style.display = "none";
     const file = e.target.files[0];
+
+    console.log(e);
 
     const img = new Image();
     img.src = URL.createObjectURL(file)
 
 
-    img.onload = ()=>{
-        imageCanvas.style.display="block";
-        imageCanvas.width = img.width;
-        imageCanvas.height = img.height;
-        canvasCtx.drawImage(img,0,0);
+    img.onload = () => {
+        image = img
+        imageCanvas.style.display = "block";
+        const maxWidth = 800;
+        const maxHeight = 600;
+
+        let width = img.width;
+        let height = img.height;
+
+        const ratio = Math.min(maxWidth / width, maxHeight / height);
+
+        width = width * ratio;
+        height = height * ratio;
+
+        imageCanvas.width = width;
+        imageCanvas.height = height;
+
+        canvasCtx.drawImage(img, 0, 0, width, height);
     }
 })
+
+
+function applyFilters(val, unit) {
+    canvasCtx.clearRect(0,0,imageCanvas.width,imageCanvas.height);
+    canvasCtx.filter = `brightness(${filters.brightness.value}${filters.brightness.unit})
+    contrast(${filters })`;
+    canvasCtx.drawImage(image, 0, 0,imageCanvas.width,imageCanvas.height);
+}
+
