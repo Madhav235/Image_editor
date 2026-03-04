@@ -149,6 +149,7 @@ html,body{
 }
 
 canvas{
-    max-width: 90%;
-    min-height: 90%;
+    max-width: 95%;
+    min-height: 95%;
+    display: none;
 }

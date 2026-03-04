@@ -79,15 +79,16 @@ Object.keys(filters).forEach(val=>{
 });
 
 imageInput.addEventListener("change",(e)=>{
-    // const placeholder = document.querySelector(".placeholder");
-    // placeholder.style.appearance = "none";
-    const file = e.target.files[0]
+    const placeholder = document.querySelector(".placeholder");
+    placeholder.style.display = "none";
+    const file = e.target.files[0];
 
     const img = new Image();
     img.src = URL.createObjectURL(file)
 
 
     img.onload = ()=>{
+        imageCanvas.style.display="block";
         imageCanvas.width = img.width;
         imageCanvas.height = img.height;
         canvasCtx.drawImage(img,0,0);
