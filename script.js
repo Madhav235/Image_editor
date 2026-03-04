@@ -16,21 +16,16 @@ const filters = {
         min: 0,
         max: 200,
         unit: "%"
-    }, exposure: {
-        value: 100,
-        min: 0,
-        max: 200,
-        unit: "%"
     }, hue_rotate: {
         value: 0,
         min: 0,
         max: 200,
-        unit: "%"
+        unit: "deg"
     }, blur_scale: {
         value: 0,
         min: 0,
-        max: 200,
-        unit: "%"
+        max: 10,
+        unit: "px"
     }, grayScale: {
         value: 0,
         min: 0,
@@ -42,9 +37,9 @@ const filters = {
         max: 200,
         unit: "%"
     }, opacity: {
-        value: 0,
+        value: 100,
         min: 0,
-        max: 200,
+        max: 100,
         unit: "%"
     }, invert: {
         value: 0,
@@ -74,7 +69,7 @@ function createElement(name, value, min, max, unit = "%") {
     input.addEventListener("input", (e) => {
         filters[name].value = input.value;
         console.log(unit)
-        applyFilters(input.value, unit)
+        applyFilters()
     });
 
     return div
@@ -120,10 +115,18 @@ imageInput.addEventListener("change", (e) => {
 })
 
 
-function applyFilters(val, unit) {
+function applyFilters() {
     canvasCtx.clearRect(0,0,imageCanvas.width,imageCanvas.height);
-    canvasCtx.filter = `brightness(${filters.brightness.value}${filters.brightness.unit})
-    contrast(${filters })`;
+    canvasCtx.filter = `
+    brightness(${filters.brightness.value}${filters.brightness.unit})
+    contrast(${filters.contrast.value}${filters.contrast.unit})
+    hue-rotate(${filters.hue_rotate.value}${filters.hue_rotate.unit})
+    blur(${filters.blur_scale.value}${filters.blur_scale.unit})
+    grayscale(${filters.grayScale.value}${filters.grayScale.unit})
+    sepia(${filters.sepia.value}${filters.sepia.unit})
+    opacity(${filters.opacity.value}${filters.opacity.unit})
+    invert(${filters.invert.value}${filters.invert.unit})
+    `;
     canvasCtx.drawImage(image, 0, 0,imageCanvas.width,imageCanvas.height);
 }
 
