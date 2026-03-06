@@ -190,5 +190,5 @@ download.addEventListener("click",(e)=>{
     const link = document.createElement("a");
     link.download = "edited-image.png";
     link.href = imageCanvas.toDataURL();
-    link.click()```
+    link.click()
 })
