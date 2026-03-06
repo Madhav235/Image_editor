@@ -200,13 +200,12 @@ function createElement(name, value, min, max, unit = "%") {
     filters[name].value = input.value;
     applyFilters();
   });
-  console.log(div)
 
   return div;
 }
 
 // call sliders
-(function createFilters(){
+function createFilters() {
   Object.keys(filters).forEach((val) => {
     let a = createElement(
       val,
@@ -217,7 +216,9 @@ function createElement(name, value, min, max, unit = "%") {
     );
     filterContainer.appendChild(a);
   });
-})()
+};
+
+createFilters();
 
 // create presets dynamically
 function createPresets(preset) {
@@ -280,9 +281,10 @@ function applyFilters() {
   canvasCtx.drawImage(image, 0, 0, imageCanvas.width, imageCanvas.height);
 }
 
+
 // reset button functionality
+const reset = document.querySelector("#reset");
 reset.addEventListener("click", (e) => {
-    const reset = document.querySelector("#reset");
   filters = {
     brightness: {
       value: 100,
@@ -339,8 +341,8 @@ reset.addEventListener("click", (e) => {
 });
 
 // download button functionality
+const download = document.querySelector("#downloadImage");
 download.addEventListener("click", (e) => {
-    const download = document.querySelector("#downloadImage");
   const link = document.createElement("a");
   link.download = "edited-image.png";
   link.href = imageCanvas.toDataURL();
@@ -349,7 +351,7 @@ download.addEventListener("click", (e) => {
 
 // apply presets
 function applyPresets(type) {
-    const filterContainer = document.querySelector(".filterContainer");
+  const filterContainer = document.querySelector(".filterContainer");
   canvasCtx.clearRect(0, 0, imageCanvas.width, imageCanvas.height);
   canvasCtx.filter = `
     brightness(${presets[type].brightness}${filters.brightness.unit})
@@ -362,18 +364,25 @@ function applyPresets(type) {
     invert(${presets[type].invert}${filters.invert.unit})
     `;
   canvasCtx.drawImage(image, 0, 0, imageCanvas.width, imageCanvas.height);
-  filterContainer.innerHTML="<h1>Filters</h1>"
-   Object.keys(filters).forEach((val)=>{
-        let a = createElement(val, presets[type][val],filters[val].min, filters[val].max);
-        filterContainer.appendChild(a)
-    })
+  filterContainer.innerHTML = "<h1>Filters</h1>";
+  Object.keys(filters).forEach((val) => {
+    let a = createElement(
+      val,
+      presets[type][val],
+      filters[val].min,
+      filters[val].max,
+    );
+    filterContainer.appendChild(a);
+  });
 }
 
 // add listener to presets
-(function enablePresets() {
+function enablePresets() {
   presetsContainer.querySelectorAll(".btn").forEach((val) => {
     val.addEventListener("click", (e) => {
       applyPresets(val.innerText);
     });
   });
-})()
+};
+
+enablePresets();
