@@ -187,6 +187,14 @@ function createElement(name, value, min, max, unit = "%") {
     return div
 }
 
+function createPresets(){
+    let div = document.createElement("div");
+    div.classList.add("btn");
+
+    let presetsContainer = document.querySelector(".presetsContainer");
+    presetsContainer.appendChild("div");
+}
+
 const filterContainer = document.querySelector(".filterContainer");
 function createFilters(){
     Object.keys(filters).forEach(val => {
