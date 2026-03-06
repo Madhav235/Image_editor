@@ -49,6 +49,118 @@ let filters = {
     }
 }
 
+let presets = {
+  drama: {
+    brightness: 110,
+    contrast: 160,
+    hue_rotate: 0,
+    blur_scale: 0,
+    grayscale: 20,
+    sepia: 10,
+    opacity: 100,
+    invert: 0
+  },
+
+  vintage: {
+    brightness: 105,
+    contrast: 90,
+    hue_rotate: 10,
+    blur_scale: 0,
+    grayscale: 20,
+    sepia: 60,
+    opacity: 100,
+    invert: 0
+  },
+
+  oldSchool: {
+    brightness: 95,
+    contrast: 85,
+    hue_rotate: 5,
+    blur_scale: 1,
+    grayscale: 40,
+    sepia: 50,
+    opacity: 100,
+    invert: 0
+  },
+
+  cyberpunk: {
+    brightness: 120,
+    contrast: 150,
+    hue_rotate: 180,
+    blur_scale: 0,
+    grayscale: 0,
+    sepia: 0,
+    opacity: 100,
+    invert: 10
+  },
+
+  softGlow: {
+    brightness: 115,
+    contrast: 90,
+    hue_rotate: 0,
+    blur_scale: 2,
+    grayscale: 0,
+    sepia: 15,
+    opacity: 100,
+    invert: 0
+  },
+
+  noir: {
+    brightness: 100,
+    contrast: 140,
+    hue_rotate: 0,
+    blur_scale: 0,
+    grayscale: 100,
+    sepia: 0,
+    opacity: 100,
+    invert: 0
+  },
+
+  warmSunset: {
+    brightness: 110,
+    contrast: 105,
+    hue_rotate: 330,
+    blur_scale: 0,
+    grayscale: 0,
+    sepia: 40,
+    opacity: 100,
+    invert: 0
+  },
+
+  coolTone: {
+    brightness: 100,
+    contrast: 110,
+    hue_rotate: 200,
+    blur_scale: 0,
+    grayscale: 0,
+    sepia: 0,
+    opacity: 100,
+    invert: 0
+  },
+
+  faded: {
+    brightness: 110,
+    contrast: 70,
+    hue_rotate: 0,
+    blur_scale: 1,
+    grayscale: 20,
+    sepia: 20,
+    opacity: 95,
+    invert: 0
+  },
+
+  retroPop: {
+    brightness: 120,
+    contrast: 130,
+    hue_rotate: 20,
+    blur_scale: 0,
+    grayscale: 0,
+    sepia: 25,
+    opacity: 100,
+    invert: 0
+  }
+};
+
 function createElement(name, value, min, max, unit = "%") {
     const div = document.createElement("div");
     div.classList.add("filter");
@@ -63,7 +175,7 @@ function createElement(name, value, min, max, unit = "%") {
     const p = document.createElement("p");
     p.innerText = name;
 
-    div.appendChild(p);
+    div.appendChild(p);``
     div.appendChild(input);
 
     input.addEventListener("input", (e) => {
