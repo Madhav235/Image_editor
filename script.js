@@ -183,3 +183,12 @@ applyFilters()
 filterContainer.innerHTML="<h1>Filters</h1>"
 createFilters()
 })
+
+const download = document.querySelector("#downloadImage");
+
+download.addEventListener("click",(e)=>{
+    const link = document.createElement("a");
+    link.download = "edited-image.png";
+    link.href = imageCanvas.toDataURL();
+    link.click()```
+})
