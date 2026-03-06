@@ -1,10 +1,19 @@
+// global variables
+
+// canvas integration
 const imageInput = document.querySelector("#imageInput");
 let imageCanvas = document.querySelector("#image-canvas");
 const canvasCtx = imageCanvas.getContext("2d");
+
+// container divs
+const filterContainer = document.querySelector(".filterContainer");
 const presetsContainer = document.querySelector(".presetsContainer");
+
+// canvas draw required
 let image = null;
 let file = null;
 
+// filters
 let filters = {
   brightness: {
     value: 100,
@@ -56,6 +65,7 @@ let filters = {
   },
 };
 
+// presets
 let presets = {
   drama: {
     brightness: 110,
@@ -168,6 +178,7 @@ let presets = {
   },
 };
 
+// create sliders dynamically
 function createElement(name, value, min, max, unit = "%") {
   const div = document.createElement("div");
   div.classList.add("filter");
@@ -194,21 +205,8 @@ function createElement(name, value, min, max, unit = "%") {
   return div;
 }
 
-function createPresets(preset) {
-  let div = document.createElement("div");
-  div.classList.add("btn");
-  div.innerText = preset;
-
-  const presetsContainer = document.querySelector(".presetsContainer");
-  presetsContainer.appendChild(div);
-}
-
-Object.keys(presets).forEach((val) => {
-  createPresets(val);
-});
-
-const filterContainer = document.querySelector(".filterContainer");
-function createFilters() {
+// call sliders
+(function createFilters(){
   Object.keys(filters).forEach((val) => {
     let a = createElement(
       val,
@@ -219,10 +217,24 @@ function createFilters() {
     );
     filterContainer.appendChild(a);
   });
+})()
+
+// create presets dynamically
+function createPresets(preset) {
+  let div = document.createElement("div");
+  div.classList.add("btn");
+  div.innerText = preset;
+
+  const presetsContainer = document.querySelector(".presetsContainer");
+  presetsContainer.appendChild(div);
 }
 
-createFilters();
+// call presets
+Object.keys(presets).forEach((val) => {
+  createPresets(val);
+});
 
+// slider input listener
 imageInput.addEventListener("change", (e) => {
   const placeholder = document.querySelector(".placeholder");
   placeholder.style.display = "none";
@@ -252,6 +264,7 @@ imageInput.addEventListener("change", (e) => {
   };
 });
 
+// apply required filters
 function applyFilters() {
   canvasCtx.clearRect(0, 0, imageCanvas.width, imageCanvas.height);
   canvasCtx.filter = `
@@ -267,8 +280,9 @@ function applyFilters() {
   canvasCtx.drawImage(image, 0, 0, imageCanvas.width, imageCanvas.height);
 }
 
-const reset = document.querySelector("#reset");
+// reset button functionality
 reset.addEventListener("click", (e) => {
+    const reset = document.querySelector("#reset");
   filters = {
     brightness: {
       value: 100,
@@ -324,15 +338,16 @@ reset.addEventListener("click", (e) => {
   createFilters();
 });
 
-const download = document.querySelector("#downloadImage");
-
+// download button functionality
 download.addEventListener("click", (e) => {
+    const download = document.querySelector("#downloadImage");
   const link = document.createElement("a");
   link.download = "edited-image.png";
   link.href = imageCanvas.toDataURL();
   link.click();
 });
 
+// apply presets
 function applyPresets(type) {
     const filterContainer = document.querySelector(".filterContainer");
   canvasCtx.clearRect(0, 0, imageCanvas.width, imageCanvas.height);
@@ -354,12 +369,11 @@ function applyPresets(type) {
     })
 }
 
-function enablePresets() {
+// add listener to presets
+(function enablePresets() {
   presetsContainer.querySelectorAll(".btn").forEach((val) => {
     val.addEventListener("click", (e) => {
       applyPresets(val.innerText);
     });
   });
-}
-
-enablePresets();
+})()
