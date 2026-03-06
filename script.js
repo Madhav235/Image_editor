@@ -1,53 +1,60 @@
 const imageInput = document.querySelector("#imageInput");
 let imageCanvas = document.querySelector("#image-canvas");
 const canvasCtx = imageCanvas.getContext("2d");
+const presetsContainer = document.querySelector(".presetsContainer");
 let image = null;
 let file = null;
 
 let filters = {
-    brightness: {
-        value: 100,
-        min: 0,
-        max: 200,
-        unit: "%"
-    },
-    contrast: {
-        value: 100,
-        min: 0,
-        max: 200,
-        unit: "%"
-    }, hue_rotate: {
-        value: 0,
-        min: 0,
-        max: 200,
-        unit: "deg"
-    }, blur_scale: {
-        value: 0,
-        min: 0,
-        max: 10,
-        unit: "px"
-    }, grayScale: {
-        value: 0,
-        min: 0,
-        max: 200,
-        unit: "%"
-    }, sepia: {
-        value: 0,
-        min: 0,
-        max: 200,
-        unit: "%"
-    }, opacity: {
-        value: 100,
-        min: 0,
-        max: 100,
-        unit: "%"
-    }, invert: {
-        value: 0,
-        min: 0,
-        max: 200,
-        unit: "%"
-    }
-}
+  brightness: {
+    value: 100,
+    min: 0,
+    max: 200,
+    unit: "%",
+  },
+  contrast: {
+    value: 100,
+    min: 0,
+    max: 200,
+    unit: "%",
+  },
+  hue_rotate: {
+    value: 0,
+    min: 0,
+    max: 200,
+    unit: "deg",
+  },
+  blur_scale: {
+    value: 0,
+    min: 0,
+    max: 10,
+    unit: "px",
+  },
+  grayScale: {
+    value: 0,
+    min: 0,
+    max: 200,
+    unit: "%",
+  },
+  sepia: {
+    value: 0,
+    min: 0,
+    max: 200,
+    unit: "%",
+  },
+  opacity: {
+    value: 100,
+    min: 0,
+    max: 100,
+    unit: "%",
+  },
+  invert: {
+    value: 0,
+    min: 0,
+    max: 200,
+    unit: "%",
+  },
+};
 
 let presets = {
   drama: {
@@ -55,10 +62,10 @@ let presets = {
     contrast: 160,
     hue_rotate: 0,
     blur_scale: 0,
-    grayscale: 20,
+    grayScale: 20,
     sepia: 10,
     opacity: 100,
-    invert: 0
+    invert: 0,
   },
 
   vintage: {
@@ -66,10 +73,10 @@ let presets = {
     contrast: 90,
     hue_rotate: 10,
     blur_scale: 0,
-    grayscale: 20,
+    grayScale: 20,
     sepia: 60,
     opacity: 100,
-    invert: 0
+    invert: 0,
   },
 
   oldSchool: {
@@ -77,10 +84,10 @@ let presets = {
     contrast: 85,
     hue_rotate: 5,
     blur_scale: 1,
-    grayscale: 40,
+    grayScale: 40,
     sepia: 50,
     opacity: 100,
-    invert: 0
+    invert: 0,
   },
 
   cyberpunk: {
@@ -88,10 +95,10 @@ let presets = {
     contrast: 150,
     hue_rotate: 180,
     blur_scale: 0,
-    grayscale: 0,
+    grayScale: 0,
     sepia: 0,
     opacity: 100,
-    invert: 10
+    invert: 10,
   },
 
   softGlow: {
@@ -99,10 +106,10 @@ let presets = {
     contrast: 90,
     hue_rotate: 0,
     blur_scale: 2,
-    grayscale: 0,
+    grayScale: 0,
     sepia: 15,
     opacity: 100,
-    invert: 0
+    invert: 0,
   },
 
   noir: {
@@ -110,10 +117,10 @@ let presets = {
     contrast: 140,
     hue_rotate: 0,
     blur_scale: 0,
-    grayscale: 100,
+    grayScale: 100,
     sepia: 0,
     opacity: 100,
-    invert: 0
+    invert: 0,
   },
 
   warmSunset: {
@@ -121,10 +128,10 @@ let presets = {
     contrast: 105,
     hue_rotate: 330,
     blur_scale: 0,
-    grayscale: 0,
+    grayScale: 0,
     sepia: 40,
     opacity: 100,
-    invert: 0
+    invert: 0,
   },
 
   coolTone: {
@@ -132,10 +139,10 @@ let presets = {
     contrast: 110,
     hue_rotate: 200,
     blur_scale: 0,
-    grayscale: 0,
+    grayScale: 0,
     sepia: 0,
     opacity: 100,
-    invert: 0
+    invert: 0,
   },
 
   faded: {
@@ -143,10 +150,10 @@ let presets = {
     contrast: 70,
     hue_rotate: 0,
     blur_scale: 1,
-    grayscale: 20,
+    grayScale: 20,
     sepia: 20,
     opacity: 95,
-    invert: 0
+    invert: 0,
   },
 
   retroPop: {
@@ -154,99 +161,99 @@ let presets = {
     contrast: 130,
     hue_rotate: 20,
     blur_scale: 0,
-    grayscale: 0,
+    grayScale: 0,
     sepia: 25,
     opacity: 100,
-    invert: 0
-  }
+    invert: 0,
+  },
 };
 
 function createElement(name, value, min, max, unit = "%") {
-    const div = document.createElement("div");
-    div.classList.add("filter");
-    const h1 = document.createElement("h1");
-    const input = document.createElement("input");
-    input.type = "range";
-    input.min = min;
-    input.max = max;
-    input.id = name;
-    input.value = value;
+  const div = document.createElement("div");
+  div.classList.add("filter");
+  const h1 = document.createElement("h1");
+  const input = document.createElement("input");
+  input.type = "range";
+  input.min = min;
+  input.max = max;
+  input.id = name;
+  input.value = value;
 
-    const p = document.createElement("p");
-    p.innerText = name;
+  const p = document.createElement("p");
+  p.innerText = name;
 
-    div.appendChild(p);``
-    div.appendChild(input);
+  div.appendChild(p);
+  div.appendChild(input);
 
-    input.addEventListener("input", (e) => {
-        filters[name].value = input.value;
-        console.log(unit)
-        applyFilters()
-    });
+  input.addEventListener("input", (e) => {
+    filters[name].value = input.value;
+    applyFilters();
+  });
 
-    return div
+  return div;
 }
 
-function createPresets(preset){
-    console.log(preset)
-    let div = document.createElement("div");
-    div.classList.add("btn");
-    div.innerText = preset;
+function createPresets(preset) {
+  let div = document.createElement("div");
+  div.classList.add("btn");
+  div.innerText = preset;
 
-    const presetsContainer = document.querySelector(".presetsContainer");
-    presetsContainer.appendChild(div);
+  const presetsContainer = document.querySelector(".presetsContainer");
+  presetsContainer.appendChild(div);
 }
 
-Object.keys(presets).forEach((val)=>{
-    createPresets(val)
-})
+Object.keys(presets).forEach((val) => {
+  createPresets(val);
+});
 
 const filterContainer = document.querySelector(".filterContainer");
-function createFilters(){
-    Object.keys(filters).forEach(val => {
-    let a = createElement(val, filters[val].value, filters[val].min, filters[val].max, filters[val].unit);
+function createFilters() {
+  Object.keys(filters).forEach((val) => {
+    let a = createElement(
+      val,
+      filters[val].value,
+      filters[val].min,
+      filters[val].max,
+      filters[val].unit,
+    );
     filterContainer.appendChild(a);
-});
+  });
 }
 
 createFilters();
 
 imageInput.addEventListener("change", (e) => {
-    const placeholder = document.querySelector(".placeholder");
-    placeholder.style.display = "none";
-    const file = e.target.files[0];
+  const placeholder = document.querySelector(".placeholder");
+  placeholder.style.display = "none";
+  const file = e.target.files[0];
 
-    console.log(e);
+  const img = new Image();
+  img.src = URL.createObjectURL(file);
 
-    const img = new Image();
-    img.src = URL.createObjectURL(file)
+  img.onload = () => {
+    image = img;
+    imageCanvas.style.display = "block";
+    const maxWidth = 800;
+    const maxHeight = 600;
 
+    let width = img.width;
+    let height = img.height;
 
-    img.onload = () => {
-        image = img
-        imageCanvas.style.display = "block";
-        const maxWidth = 800;
-        const maxHeight = 600;
+    const ratio = Math.min(maxWidth / width, maxHeight / height);
 
-        let width = img.width;
-        let height = img.height;
+    width = width * ratio;
+    height = height * ratio;
 
-        const ratio = Math.min(maxWidth / width, maxHeight / height);
+    imageCanvas.width = width;
+    imageCanvas.height = height;
 
-        width = width * ratio;
-        height = height * ratio;
-
-        imageCanvas.width = width;
-        imageCanvas.height = height;
-
-        canvasCtx.drawImage(img, 0, 0, width, height);
-    }
-})
-
+    canvasCtx.drawImage(img, 0, 0, width, height);
+  };
+});
 
 function applyFilters() {
-    canvasCtx.clearRect(0,0,imageCanvas.width,imageCanvas.height);
-    canvasCtx.filter = `
+  canvasCtx.clearRect(0, 0, imageCanvas.width, imageCanvas.height);
+  canvasCtx.filter = `
     brightness(${filters.brightness.value}${filters.brightness.unit})
     contrast(${filters.contrast.value}${filters.contrast.unit})
     hue-rotate(${filters.hue_rotate.value}${filters.hue_rotate.unit})
@@ -256,65 +263,96 @@ function applyFilters() {
     opacity(${filters.opacity.value}${filters.opacity.unit})
     invert(${filters.invert.value}${filters.invert.unit})
     `;
-    canvasCtx.drawImage(image, 0, 0,imageCanvas.width,imageCanvas.height);
+  canvasCtx.drawImage(image, 0, 0, imageCanvas.width, imageCanvas.height);
 }
 
 const reset = document.querySelector("#reset");
-reset.addEventListener("click",(e)=>{
-    filters = {
+reset.addEventListener("click", (e) => {
+  filters = {
     brightness: {
-        value: 100,
-        min: 0,
-        max: 200,
-        unit: "%"
+      value: 100,
+      min: 0,
+      max: 200,
+      unit: "%",
     },
     contrast: {
-        value: 100,
-        min: 0,
-        max: 200,
-        unit: "%"
-    }, hue_rotate: {
-        value: 0,
-        min: 0,
-        max: 200,
-        unit: "deg"
-    }, blur_scale: {
-        value: 0,
-        min: 0,
-        max: 10,
-        unit: "px"
-    }, grayScale: {
-        value: 0,
-        min: 0,
-        max: 200,
-        unit: "%"
-    }, sepia: {
-        value: 0,
-        min: 0,
-        max: 200,
-        unit: "%"
-    }, opacity: {
-        value: 100,
-        min: 0,
-        max: 100,
-        unit: "%"
-    }, invert: {
-        value: 0,
-        min: 0,
-        max: 200,
-        unit: "%"
-    }
-}
-applyFilters()
-filterContainer.innerHTML="<h1>Filters</h1>"
-createFilters()
-})
+      value: 100,
+      min: 0,
+      max: 200,
+      unit: "%",
+    },
+    hue_rotate: {
+      value: 0,
+      min: 0,
+      max: 200,
+      unit: "deg",
+    },
+    blur_scale: {
+      value: 0,
+      min: 0,
+      max: 10,
+      unit: "px",
+    },
+    grayScale: {
+      value: 0,
+      min: 0,
+      max: 200,
+      unit: "%",
+    },
+    sepia: {
+      value: 0,
+      min: 0,
+      max: 200,
+      unit: "%",
+    },
+    opacity: {
+      value: 100,
+      min: 0,
+      max: 100,
+      unit: "%",
+    },
+    invert: {
+      value: 0,
+      min: 0,
+      max: 200,
+      unit: "%",
+    },
+  };
+  applyFilters();
+  filterContainer.innerHTML = "<h1>Filters</h1>";
+  createFilters();
+});
 
 const download = document.querySelector("#downloadImage");
 
-download.addEventListener("click",(e)=>{
-    const link = document.createElement("a");
-    link.download = "edited-image.png";
-    link.href = imageCanvas.toDataURL();
-    link.click()
-})
+download.addEventListener("click", (e) => {
+  const link = document.createElement("a");
+  link.download = "edited-image.png";
+  link.href = imageCanvas.toDataURL();
+  link.click();
+});
+
+function applyPresets(type) {
+  canvasCtx.clearRect(0, 0, imageCanvas.width, imageCanvas.height);
+  canvasCtx.filter = `
+    brightness(${presets[type].brightness}${filters.brightness.unit})
+    contrast(${presets[type].contrast}${filters.contrast.unit})
+    hue-rotate(${presets[type].hue_rotate}${filters.hue_rotate.unit})
+    blur(${presets[type].blur_scale}${filters.blur_scale.unit})
+    grayscale(${presets[type].grayScale}${filters.grayScale.unit})
+    sepia(${presets[type].sepia}${filters.sepia.unit})
+    opacity(${presets[type].opacity}${filters.opacity.unit})
+    invert(${presets[type].invert}${filters.invert.unit})
+    `;
+  canvasCtx.drawImage(image, 0, 0, imageCanvas.width, imageCanvas.height);
+}
+
+function enablePresets() {
+  presetsContainer.querySelectorAll(".btn").forEach((val) => {
+    val.addEventListener("click", (e) => {
+      applyPresets(val.innerText);
+    });
+  });
+}
+
+enablePresets();
