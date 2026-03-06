@@ -18,6 +18,10 @@ html,body{
     justify-content: space-between;
 }
 
+.btn:hover{
+    cursor: pointer;
+}
+
 .main .left{
     height: 100%;
     width: 59%;
