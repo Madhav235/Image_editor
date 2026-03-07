@@ -235,7 +235,7 @@ Object.keys(presets).forEach((val) => {
   createPresets(val);
 });
 
-// slider input listener
+// image load input listener
 imageInput.addEventListener("change", (e) => {
   const placeholder = document.querySelector(".placeholder");
   placeholder.style.display = "none";
@@ -374,9 +374,18 @@ function applyPresets(type) {
     );
     filterContainer.appendChild(a);
   });
+
+  filters.brightness.value = presets[type].brightness
+  filters.contrast.value = presets[type].contrast
+  filters.hue_rotate.value = presets[type].hue_rotate
+  filters.blur_scale.value = presets[type].blur_scale
+  filters.grayScale.value = presets[type].grayScale
+  filters.sepia.value = presets[type].sepia
+  filters.opacity.value = presets[type].opacity
+  filters.invert.value = presets[type].invert
 }
 
-// add listener to presets
+// add listener to the presets
 function enablePresets() {
   presetsContainer.querySelectorAll(".btn").forEach((val) => {
     val.addEventListener("click", (e) => {
