@@ -393,5 +393,3 @@ function enablePresets() {
     });
   });
 };
-
-enablePresets();
