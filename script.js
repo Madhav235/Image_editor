@@ -386,12 +386,3 @@ function applyPresets(type) {
 }
 
 // add listener to the presets
-function enablePresets() {
-  presetsContainer.querySelectorAll(".btn").forEach((val) => {
-    val.addEventListener("click", (e) => {
-      applyPresets(val.innerText);
-    });
-  });
-};
-
-enablePresets()
